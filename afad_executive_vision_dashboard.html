@@ -1,0 +1,278 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0d2240;
+  --blue:#0054a6;
+  --blue-light:#e8f0fb;
+  --orange:#f47920;
+  --orange-soft:rgba(244,121,32,.12);
+  --green-soft:#e8f5ee;
+  --green:#1a7a4a;
+  --red-soft:#fdecea;
+  --red:#c0392b;
+  --bg:#eef1f6;
+  --glass:rgba(255,255,255,.72);
+  --glass-border:rgba(255,255,255,.9);
+  --text-primary:#0d2240;
+  --text-secondary:#5a6a80;
+  --text-muted:#9aaabf;
+  --divider:rgba(0,84,166,.08);
+}
+.db{font-family:'Inter',var(--font-sans);background:var(--bg);min-height:100vh;}
+
+.topbar{background:linear-gradient(135deg,#002f6c 0%,#0054a6 100%);padding:0 20px;height:48px;display:flex;align-items:center;justify-content:space-between;}
+.tb-left{display:flex;align-items:center;gap:12px;}
+.tb-logo{background:#fff;border-radius:5px;padding:4px 9px;font-size:12px;font-weight:600;color:#0054a6;letter-spacing:.4px;}
+.tb-title{color:rgba(255,255,255,.95);font-size:13px;font-weight:500;letter-spacing:.1px;}
+.tb-right{display:flex;align-items:center;gap:10px;}
+.tb-update{font-size:11px;color:rgba(255,255,255,.6);}
+.tb-update b{color:rgba(255,255,255,.9);font-weight:500;}
+.tb-export{font-size:11px;font-weight:500;padding:5px 14px;border-radius:6px;border:none;background:#f47920;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.2px;}
+.tb-export:hover{background:#d4620f;}
+
+.filterbar{background:rgba(255,255,255,.85);border-bottom:1px solid var(--divider);padding:7px 20px;display:flex;align-items:center;gap:10px;}
+.f-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted);}
+.f-sel{font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px;border:1px solid rgba(0,84,166,.18);background:#f4f7fb;color:var(--navy);cursor:pointer;font-family:'Inter',sans-serif;appearance:none;padding-right:18px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='5' viewBox='0 0 9 5'%3E%3Cpath d='M1 1l3.5 3L8 1' stroke='%230054a6' stroke-width='1.3' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;}
+.f-sel option{color:#000;background:#fff;}
+.f-divider{width:1px;height:16px;background:var(--divider);}
+.f-apply{font-size:11px;font-weight:600;padding:4px 14px;border-radius:20px;border:none;background:#0054a6;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;margin-left:auto;}
+.refresh-badge{font-size:10px;color:var(--text-muted);display:flex;align-items:center;gap:4px;}
+.refresh-dot{width:6px;height:6px;border-radius:50%;background:#1a7a4a;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.body{padding:14px 18px;display:flex;flex-direction:column;gap:12px;}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px;}
+.kpi{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:11px 12px;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,84,166,.12);}
+.kpi-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:7px;}
+.kpi-icon svg{width:13px;height:13px;}
+.kpi-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-secondary);margin-bottom:4px;line-height:1.3;}
+.kpi-val{font-size:16px;font-weight:700;color:var(--text-primary);line-height:1;margin-bottom:4px;font-variant-numeric:tabular-nums;}
+.kpi-sub{font-size:10px;font-weight:500;display:flex;align-items:center;gap:3px;}
+.kpi-sparkline{position:absolute;bottom:0;left:0;right:0;height:28px;opacity:.18;}
+.up{color:var(--green);} .dn{color:var(--red);}
+.kpi-tag{display:inline-block;font-size:9px;font-weight:600;padding:1px 5px;border-radius:4px;margin-top:2px;}
+.tag-blue{background:var(--blue-light);color:#0054a6;}
+.tag-orange{background:var(--orange-soft);color:#c55a00;}
+.tag-green{background:var(--green-soft);color:var(--green);}
+
+.section-row{display:flex;align-items:center;gap:8px;}
+.sec-line{flex:1;height:1px;background:var(--divider);}
+.sec-lbl{font-size:9px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--blue);white-space:nowrap;}
+
+.charts-top{display:grid;grid-template-columns:2.2fr 1.4fr 1.4fr;gap:10px;}
+.charts-bot{display:grid;grid-template-columns:1fr 1fr 1.6fr 1fr;gap:10px;}
+.card{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:12px 14px;}
+.cc{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.cc-title{font-size:11px;font-weight:600;color:var(--text-primary);}
+.cc-meta{font-size:9px;font-weight:500;padding:2px 7px;border-radius:8px;color:var(--text-muted);border:1px solid var(--divider);background:rgba(255,255,255,.5);}
+.leg{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+.li{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--text-secondary);}
+.lsq{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.ldsh{width:14px;height:2px;border-radius:1px;flex-shrink:0;border-top:2px dashed;}
+
+.gantt-row{display:flex;align-items:center;gap:6px;height:21px;margin-bottom:3px;}
+.gname{width:78px;font-size:9px;color:var(--text-secondary);text-align:right;padding-right:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0;}
+.gtrack{flex:1;background:rgba(0,84,166,.06);border-radius:3px;height:14px;position:relative;}
+.gbar{height:100%;border-radius:3px;position:absolute;display:flex;align-items:center;padding:0 5px;}
+.gbar-lbl{font-size:8px;color:rgba(255,255,255,.95);font-weight:500;white-space:nowrap;}
+.gbar-dot{width:5px;height:5px;border-radius:50%;background:#fff;opacity:.7;flex-shrink:0;margin-right:3px;}
+
+.hrow{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+.hlbl{font-size:10px;color:var(--text-secondary);width:55px;text-align:right;flex-shrink:0;}
+.htrack{flex:1;background:rgba(0,84,166,.06);border-radius:3px;height:11px;overflow:hidden;}
+.hfill{height:100%;border-radius:3px;}
+.hval{font-size:10px;color:var(--text-secondary);width:40px;text-align:right;flex-shrink:0;font-weight:500;}
+
+.prog-item{margin-bottom:7px;}
+.prog-h{display:flex;justify-content:space-between;margin-bottom:2px;}
+.prog-name{font-size:10px;font-weight:500;color:var(--text-primary);}
+.prog-pct{font-size:10px;color:var(--text-secondary);}
+.prog-track{background:rgba(0,84,166,.07);border-radius:3px;height:9px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;}
+
+.update-note{font-size:10px;color:var(--text-muted);text-align:right;padding:2px 4px;}
+</style>
+
+<div class="db">
+  <div class="topbar">
+    <div class="tb-left">
+      <span class="tb-logo">AFAD</span>
+      <span class="tb-title">Bağış Platformu — Yönetici Özet Paneli</span>
+    </div>
+    <div class="tb-right">
+      <span class="tb-update">Son Güncelleme: <b>26 Mart 2026 · 14:30</b></span>
+      <button class="tb-export" onclick="alert('PDF / Excel dışa aktarılıyor...')">↓ Dışa Aktar</button>
+    </div>
+  </div>
+
+  <div class="filterbar">
+    <span class="f-lbl">Dönem</span>
+    <select class="f-sel"><option>Bu Yıl</option><option>Bu Ay</option><option>Son 3 Ay</option><option>Özel Aralık</option></select>
+    <div class="f-divider"></div>
+    <span class="f-lbl">Para Birimi</span>
+    <select class="f-sel"><option>TRY</option><option>USD</option><option>EUR</option><option>Tümü</option></select>
+    <div class="f-divider"></div>
+    <span class="f-lbl">Kanal</span>
+    <select class="f-sel"><option>Tümü</option><option>Web</option><option>Mobil</option><option>SMS</option><option>EFT</option></select>
+    <div class="f-divider"></div>
+    <span class="f-lbl">Kampanya</span>
+    <select class="f-sel"><option>Tümü</option><option>Deprem Yardımı</option><option>Filistin</option><option>Yangın/Sel</option><option>Gazze Zekat</option></select>
+    <button class="f-apply">Filtrele</button>
+    <div class="f-divider"></div>
+    <span class="refresh-badge"><span class="refresh-dot"></span>Canlı · 15 dk yenileme</span>
+  </div>
+
+  <div class="body">
+
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <div class="section-row"><span class="sec-line"></span><span class="sec-lbl">Finansal Trend &amp; Bağışçı Analizi</span><span class="sec-line"></span></div>
+
+    <div class="charts-top">
+      <div class="card">
+        <div class="cc"><span class="cc-title">Yıllık Finansal Trend</span><span class="cc-meta">12 Ay · Direkt DB</span></div>
+        <div class="leg">
+          <span class="li"><span class="lsq" style="background:#0054a6;opacity:.5"></span>Toplam Tutar (alan)</span>
+          <span class="li"><span class="ldsh" style="border-color:#f47920"></span>Düzenli Bağış</span>
+        </div>
+        <div style="position:relative;height:148px;"><canvas id="c1"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="cc"><span class="cc-title">Yeni Bağışçı Trendi</span><span class="cc-meta">Kayıtlı vs Anonim</span></div>
+        <div class="leg">
+          <span class="li"><span class="lsq" style="background:#0054a6;opacity:.5"></span>Kayıtlı</span>
+          <span class="li"><span class="lsq" style="background:#f47920;opacity:.5"></span>Anonim</span>
+        </div>
+        <div style="position:relative;height:148px;"><canvas id="c2"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="cc"><span class="cc-title">Kampanya Zaman Çizelgesi</span><span class="cc-meta">Gantt · 12 Ay</span></div>
+        <div id="gantt1" style="margin-top:4px;"></div>
+      </div>
+    </div>
+
+    <div class="section-row"><span class="sec-line"></span><span class="sec-lbl">Dağılım &amp; Coğrafi &amp; Kampanya Performansı</span><span class="sec-line"></span></div>
+
+    <div class="charts-bot">
+      <div class="card">
+        <div class="cc"><span class="cc-title">Ödeme Yöntemi Dağılımı</span><span class="cc-meta">%100 Yığılmış</span></div>
+        <div class="leg">
+          <span class="li"><span class="lsq" style="background:#0054a6"></span>Krt. Kartı</span>
+          <span class="li"><span class="lsq" style="background:#1d9e75"></span>EFT</span>
+          <span class="li"><span class="lsq" style="background:#f47920"></span>Mobil</span>
+          <span class="li"><span class="lsq" style="background:#7c3aed"></span>SMS</span>
+        </div>
+        <div style="position:relative;height:100px;"><canvas id="c3"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="cc"><span class="cc-title">Bölgesel Finansal Yoğunluk</span><span class="cc-meta">İl Bazlı</span></div>
+        <div id="heatmap1" style="margin-top:4px;"></div>
+        <div style="font-size:9px;color:var(--text-muted);margin-top:6px;">* Power BI'da interaktif Türkiye haritası</div>
+      </div>
+      <div class="card">
+        <div class="cc"><span class="cc-title">Bağışçı Statüsü — Zaman Tabanlı</span><span class="cc-meta">Yığılmış Bar · Çeyreklik</span></div>
+        <div class="leg">
+          <span class="li"><span class="lsq" style="background:#0054a6"></span>Aktif Kayıtlı</span>
+          <span class="li"><span class="lsq" style="background:#85b7eb"></span>Pasif Kayıtlı</span>
+          <span class="li"><span class="lsq" style="background:#f47920"></span>Aktif Anonim</span>
+          <span class="li"><span class="lsq" style="background:#fac775"></span>Pasif Anonim</span>
+        </div>
+        <div style="position:relative;height:100px;"><canvas id="c4"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="cc"><span class="cc-title">Top Kampanya İlerlemesi</span><span class="cc-meta">Hedef vs Gerçek</span></div>
+        <div id="prog1" style="margin-top:4px;"></div>
+      </div>
+    </div>
+
+    <div class="update-note">Finansal Trend &amp; Bağışçı verileri: Direkt DB (anlık) &nbsp;·&nbsp; Statü Dağılımı &amp; Kampanya: Periyodik (15 dk) &nbsp;·&nbsp; Coğrafi: Periyodik (1 saat)</div>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const KPIs=[
+  {lbl:'Toplam Bağış Tutarı',val:'₺142.5M',sub:'+%12',dir:'up',tag:'Finansal',tc:'tag-blue',spark:[80,92,75,110,95,85,93,105,118,89,104,142],ic:'#e8f0fb',icol:'#0054a6'},
+  {lbl:'Ortalama Bağış Tutarı',val:'₺132',sub:'−%3.1',dir:'dn',tag:'Finansal',tc:'tag-blue',spark:[155,148,142,138,145,133,140,136,130,135,134,132],ic:'#e8f0fb',icol:'#0054a6'},
+  {lbl:'Düzenli Bağış (Aylık)',val:'₺1.25M',sub:'+%18',dir:'up',tag:'Stabil Gelir',tc:'tag-green',spark:[0.9,1.0,1.0,1.1,1.05,0.98,1.02,1.1,1.18,1.1,1.22,1.25],ic:'#e8f5ee',icol:'#1a7a4a'},
+  {lbl:'Düzenli Bağışçı Sayısı',val:'9.480',sub:'+%22',dir:'up',tag:'Sadakat',tc:'tag-green',spark:[6800,7200,7500,7800,7900,8100,8300,8600,8900,9000,9200,9480],ic:'#e8f5ee',icol:'#1a7a4a'},
+  {lbl:'Toplam Bağışçı',val:'84.230',sub:'+%9.4',dir:'up',tag:'Bağışçı',tc:'tag-orange',spark:[70,73,75,77,78,79,80,81,82,83,83.5,84.2],ic:'#fff4ec',icol:'#f47920'},
+  {lbl:'Yeni Bağışçı (Bu Ay)',val:'3.130',sub:'+%5',dir:'up',tag:'Büyüme',tc:'tag-orange',spark:[2600,2800,2700,3100,2900,2600,2750,3000,3200,2800,3000,3130],ic:'#fff4ec',icol:'#f47920'},
+  {lbl:'Aktif Kayıtlı',val:'11.207',sub:'+%14',dir:'up',tag:'Bağışçı',tc:'tag-orange',spark:[8800,9200,9500,9800,10000,10200,10400,10700,11000,10900,11100,11207],ic:'#fff4ec',icol:'#f47920'},
+  {lbl:'Aktif Anonim',val:'2.018',sub:'−%3.7',dir:'dn',tag:'Dönemsel',tc:'tag-orange',spark:[2400,2300,2500,2600,2400,2200,2300,2400,2500,2300,2100,2018],ic:'#fff4ec',icol:'#f47920'},
+  {lbl:'Aktif Kampanya',val:'8',sub:'2 yeni',dir:'up',tag:'Operasyon',tc:'tag-blue',spark:[6,7,8,9,8,7,8,9,10,9,9,8],ic:'#e8f0fb',icol:'#0054a6'},
+];
+
+const grid=document.getElementById('kpi-grid');
+KPIs.forEach(k=>{
+  const div=document.createElement('div');div.className='kpi';
+  const sparkId='sp_'+Math.random().toString(36).slice(2);
+  div.innerHTML=`
+    <div class="kpi-icon" style="background:${k.ic};">
+      <svg viewBox="0 0 24 24" fill="none" stroke="${k.icol}" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    </div>
+    <div class="kpi-lbl">${k.lbl}</div>
+    <div class="kpi-val">${k.val}</div>
+    <div class="kpi-sub ${k.dir==='up'?'up':'dn'}">${k.dir==='up'?'▲':'▼'} ${k.sub}</div>
+    <span class="kpi-tag ${k.tc}">${k.tag}</span>
+    <canvas class="kpi-sparkline" id="${sparkId}"></canvas>`;
+  grid.appendChild(div);
+  requestAnimationFrame(()=>{
+    const sc=document.getElementById(sparkId);
+    if(!sc)return;
+    new Chart(sc,{type:'line',data:{labels:k.spark.map((_,i)=>i),datasets:[{data:k.spark,borderColor:k.icol,borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:k.icol+'22',tension:.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}},animation:{duration:0}}});
+  });
+});
+
+const M12=['Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara','Oca','Şub','Mar'];
+new Chart(document.getElementById('c1'),{type:'line',data:{labels:M12,datasets:[
+  {label:'Toplam',data:[8.2,9.4,8.7,11,9.8,8.6,9.3,10.5,11.8,8.9,10.4,12.4],borderColor:'#0054a6',backgroundColor:'rgba(0,84,166,.12)',borderWidth:2,pointRadius:3,pointHoverRadius:5,fill:true,tension:.4},
+  {label:'Düzenli',data:[2.1,2.2,2.2,2.4,2.3,2.1,2.2,2.4,2.6,2.4,2.7,2.9],borderColor:'#f47920',borderWidth:2,pointRadius:2,fill:false,tension:.4,borderDash:[5,4]}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:c=>`${c.dataset.label}: ₺${c.parsed.y}M`}}},scales:{x:{grid:{display:false},ticks:{font:{size:9},autoSkip:false,maxRotation:0,color:'#9aaabf'}},y:{grid:{color:'rgba(0,84,166,.06)'},ticks:{font:{size:9},color:'#9aaabf',callback:v=>`₺${v}M`}}}}});
+
+new Chart(document.getElementById('c2'),{type:'line',data:{labels:M12,datasets:[
+  {label:'Kayıtlı',data:[620,710,680,840,770,650,720,810,890,720,800,843],borderColor:'#0054a6',backgroundColor:'rgba(0,84,166,.08)',borderWidth:2,pointRadius:2.5,fill:true,tension:.4},
+  {label:'Anonim',data:[280,310,260,380,320,270,290,340,380,290,340,312],borderColor:'#f47920',backgroundColor:'rgba(244,121,32,.07)',borderWidth:2,pointRadius:2.5,fill:true,tension:.4,borderDash:[5,4]}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},scales:{x:{grid:{display:false},ticks:{font:{size:9},autoSkip:false,maxRotation:0,color:'#9aaabf'}},y:{grid:{color:'rgba(0,84,166,.06)'},ticks:{font:{size:9},color:'#9aaabf'}}}}});
+
+const gc=document.getElementById('gantt1');
+[{n:'Deprem Yard.',s:0,d:12,c:'#0054a6'},{n:'Filistin Yard.',s:0,d:12,c:'#1a5c8a'},{n:'Yangın/Sel',s:2,d:8,c:'#f47920'},{n:'Gazze Zekat',s:1,d:11,c:'#1d9e75'},{n:'Pakistan',s:0,d:5,c:'#7c3aed'},{n:'Genel Bağış',s:0,d:12,c:'#888780'}].forEach(r=>{
+  const div=document.createElement('div');div.className='gantt-row';
+  div.innerHTML=`<span class="gname">${r.n}</span><div class="gtrack"><div class="gbar" style="left:${Math.round(r.s/12*100)}%;width:${Math.round(r.d/12*100)}%;background:${r.c};"><span class="gbar-dot"></span><span class="gbar-lbl">${r.d}ay</span></div></div>`;
+  gc.appendChild(div);
+});
+
+new Chart(document.getElementById('c3'),{type:'bar',data:{labels:["Ç2'25","Ç3'25","Ç4'25","Ç1'26"],datasets:[
+  {label:'Kredi Kartı',data:[49,46,53,49],backgroundColor:'#0054a6',stack:'s'},
+  {label:'EFT/Havale',data:[22,24,21,23],backgroundColor:'#1d9e75',stack:'s'},
+  {label:'Mobil Ödeme',data:[18,17,16,19],backgroundColor:'#f47920',stack:'s'},
+  {label:'SMS',data:[11,13,10,9],backgroundColor:'#7c3aed',stack:'s'}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.dataset.label}: %${c.parsed.y}`}}},scales:{x:{grid:{display:false},ticks:{font:{size:9},color:'#9aaabf',autoSkip:false,maxRotation:0}},y:{stacked:true,max:100,grid:{color:'rgba(0,84,166,.06)'},ticks:{font:{size:9},color:'#9aaabf',callback:v=>`%${v}`}}}}});
+
+const hm=document.getElementById('heatmap1');
+[{l:'İstanbul',v:342,p:100},{l:'Ankara',v:198,p:58},{l:'İzmir',v:137,p:40},{l:'Bursa',v:94,p:27},{l:'Antalya',v:82,p:24},{l:'Diğer',v:390,p:39}].forEach(r=>{
+  const div=document.createElement('div');div.className='hrow';
+  const opacity=0.25+(r.p/140);
+  div.innerHTML=`<span class="hlbl">${r.l}</span><div class="htrack"><div class="hfill" style="width:${r.p}%;background:rgba(0,84,166,${opacity.toFixed(2)});"></div></div><span class="hval">₺${r.v}K</span>`;
+  hm.appendChild(div);
+});
+
+new Chart(document.getElementById('c4'),{type:'bar',data:{labels:["Ç2'25","Ç3'25","Ç4'25","Ç1'26"],datasets:[
+  {label:'Aktif Kayıtlı',data:[52,55,57,61],backgroundColor:'#0054a6',stack:'s'},
+  {label:'Pasif Kayıtlı',data:[18,16,15,14],backgroundColor:'#85b7eb',stack:'s'},
+  {label:'Aktif Anonim',data:[18,17,16,15],backgroundColor:'#f47920',stack:'s'},
+  {label:'Pasif Anonim',data:[12,12,12,10],backgroundColor:'#fac775',stack:'s'}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.dataset.label}: %${c.parsed.y}`}}},scales:{x:{grid:{display:false},ticks:{font:{size:9},color:'#9aaabf',autoSkip:false,maxRotation:0}},y:{stacked:true,max:100,grid:{color:'rgba(0,84,166,.06)'},ticks:{font:{size:9},color:'#9aaabf',callback:v=>`%${v}`}}}}});
+
+const pg=document.getElementById('prog1');
+[{n:'Deprem Yardımı',p:78,raised:'₺487K',target:'₺625K',c:'#0054a6'},{n:'Filistin Yardımı',p:62,raised:'₺310K',target:'₺500K',c:'#1d9e75'},{n:'Yangın / Sel',p:91,raised:'₺224K',target:'₺246K',c:'#f47920'},{n:'Gazze Zekat',p:55,raised:'₺137K',target:'₺250K',c:'#7c3aed'},{n:'Genel Bağış',p:44,raised:'₺82K',target:'₺186K',c:'#888780'}].forEach(r=>{
+  const div=document.createElement('div');div.className='prog-item';
+  div.innerHTML=`<div class="prog-h"><span class="prog-name">${r.n}</span><span class="prog-pct">${r.raised} / ${r.target}</span></div><div class="prog-track"><div class="prog-fill" style="width:${r.p}%;background:${r.c};border-radius:3px;"></div></div>`;
+  pg.appendChild(div);
+});
+</script>
